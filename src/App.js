@@ -4,9 +4,14 @@ import MyFooter from './components/MyFooter.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyAlert from './components/Welcome.js';
 import AllTheBooks from './components/AllTheBooks.js';
+import { ThemeProvider } from "./components/ThemeContext";
 import SingleBook from './components/SingleBook.js';
+import booksData from './data/books.json';
+import { useState } from 'react';
 
 function App() {
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   const book = {
     title: "il signore degli anelli",
@@ -14,16 +19,18 @@ function App() {
   };
 
   return (
-    <div>
-      <MyAlert />
-      <MyNavBar />
-      <div className="d-flex flex-column align-items-center">
-        <h1>Il libro</h1>
-        <SingleBook book={book} />
+    <ThemeProvider>
+      <div>
+        <MyAlert />
+        <MyNavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <div className="d-flex flex-column align-items-center">
+          <h1>Il libro</h1>
+          <SingleBook book={book} />
+        </div>
+        <AllTheBooks searchTerm={searchTerm} booksData={booksData} />
+        <MyFooter />
       </div>
-      <AllTheBooks />
-      <MyFooter />
-    </div>
+    </ThemeProvider>
   );
 }
 

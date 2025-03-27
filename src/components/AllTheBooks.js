@@ -1,32 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
-import SingleBook from './SingleBook';
-import booksData from '../data/books.json';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import SingleBook from "./SingleBook";
+import { useTheme } from "./ThemeContext"; // Importiamo il tema
 
-function AllTheBooks() {
+function AllTheBooks({ searchTerm, booksData }) {
+  const { theme } = useTheme(); // Otteniamo il tema
   const [books, setBooks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     setBooks(booksData);
-  }, []);
+  }, [booksData]);
 
-  const filteredBooks = books.filter(book =>
+  const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <Container className="my-4">
+    <Container className={`my-4 bg-${theme} text-${theme === "light" ? "dark" : "light"}`}>
       <h5 className="text-center">Griglia dei Libri</h5>
-
-      <Form.Group className="mb-3">
-        <Form.Control
-          type="text"
-          placeholder="Cerca un libro..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </Form.Group>
 
       <Row>
         {filteredBooks.map((book) => (

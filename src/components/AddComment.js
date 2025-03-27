@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useTheme } from "./ThemeContext";
 
 const AddComment = ({ bookId, setComments }) => {
+  const { theme } = useTheme();
+
   const [commentText, setCommentText] = useState("");
   const [rating, setRating] = useState(1);
   const [error, setError] = useState(null);
@@ -38,21 +41,53 @@ const AddComment = ({ bookId, setComments }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}
+      style={{
+        backgroundColor: theme === "light" ? "#f9f9f9" : "#333",
+        color: theme === "light" ? "#000" : "#fff",
+        padding: "1rem",
+        borderRadius: "8px"
+      }}
+    >
       <textarea 
         value={commentText} 
         onChange={(e) => setCommentText(e.target.value)} 
         placeholder="Scrivi un commento" 
         required
+        style={{
+          backgroundColor: theme === "light" ? "#fff" : "#444",
+          color: theme === "light" ? "#000" : "#fff",
+          border: "1px solid",
+          borderColor: theme === "light" ? "#ccc" : "#666",
+          width: "100%",
+          padding: "0.5rem"
+        }}
       />
       
-      <select value={rating} onChange={(e) => setRating(Number(e.target.value))}>
+      <select value={rating} onChange={(e) => setRating(Number(e.target.value))}
+        style={{
+          backgroundColor: theme === "light" ? "#fff" : "#444",
+          color: theme === "light" ? "#000" : "#fff",
+          borderColor: theme === "light" ? "#ccc" : "#666",
+          margin: "0.5rem 0"
+        }}  
+      >
         {[1, 2, 3, 4, 5].map((num) => (
           <option key={num} value={num}>{num} ⭐</option>
         ))}
       </select>
 
-      <button type="submit">Invia</button>
+      <button type="submit"
+        style={{
+          backgroundColor: theme === "light" ? "#007bff" : "#555",
+          color: "#fff",
+          padding: "0.5rem 1rem",
+          border: "none",
+          cursor: "pointer"
+        }}
+      >
+        Invia
+      </button>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
     </form>

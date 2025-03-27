@@ -1,11 +1,20 @@
 import React from "react";
 import { Container, Row, Col, Nav } from "react-bootstrap";
+import { useTheme } from "./ThemeContext";
 
 function MyFooter (){
+    
+    const {theme} = useTheme();
 
     return (
 
-        <footer style={{ backgroundColor: '#333', color: '#fff', padding: '20px 0' }}>
+        <footer
+            style={{
+                backgroundColor: theme === "light" ? "#f8f9fa" : "#333",
+                color: theme === "light" ? "#000" : "#fff",
+                padding: "20px 0",
+            }}
+        >
             <Container>
             <Row>
             <Col md={4}>
@@ -15,9 +24,9 @@ function MyFooter (){
             <Col md={4}>
                 <h5>Quick Links</h5>
                 <Nav>
-                <Nav.Link href="#">Home</Nav.Link>
-                <Nav.Link href="#">About</Nav.Link>
-                <Nav.Link href="#">Contact</Nav.Link>
+                <Nav.Link href="#" style={{ color: theme === "light" ? "#000" : "#fff" }}>Home</Nav.Link>
+                <Nav.Link href="#" style={{ color: theme === "light" ? "#000" : "#fff" }}>About</Nav.Link>
+                <Nav.Link href="#" style={{ color: theme === "light" ? "#000" : "#fff" }}>Contact</Nav.Link>
                 </Nav>
             </Col>
             <Col md={4}>

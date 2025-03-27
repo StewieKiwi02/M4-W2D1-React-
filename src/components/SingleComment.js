@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Alert, Spinner } from "react-bootstrap"; 
+import { Alert, Spinner, Button, Form } from "react-bootstrap"; 
+import { useTheme } from "./ThemeContext";
 
 const SingleComment = ({ comment, setComments }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -7,6 +8,7 @@ const SingleComment = ({ comment, setComments }) => {
   const [newRating, setNewRating] = useState(comment.rate);
   const [isLoading, setIsLoading] = useState(false); 
   const [error, setError] = useState(null); 
+  const { theme } = useTheme(); 
 
   const handleDelete = async () => {
     setIsLoading(true); 
@@ -22,7 +24,6 @@ const SingleComment = ({ comment, setComments }) => {
         throw new Error("Errore nell'eliminazione del commento");
       }
 
-     
       setComments(prevComments => prevComments.filter(c => c._id !== comment._id));
     } catch (err) {
       setError(err.message); 
@@ -67,28 +68,51 @@ const SingleComment = ({ comment, setComments }) => {
   };
 
   return (
-    <li>
-
+    <li
+      style={{
+        backgroundColor: theme === "light" ? "#fff" : "#333",
+        color: theme === "light" ? "#000" : "#fff",
+        padding: "10px",
+        marginBottom: "10px",
+        borderRadius: "5px",
+      }}
+    >
       {error && <Alert variant="danger">{error}</Alert>}
-
       {isLoading && <Spinner animation="border" variant="primary" />}
 
       {isEditing ? (
         <>
-          <textarea value={newCommentText} onChange={(e) => setNewCommentText(e.target.value)} />
-          <select value={newRating} onChange={(e) => setNewRating(Number(e.target.value))}>
+          <Form.Control
+            as="textarea"
+            value={newCommentText}
+            onChange={(e) => setNewCommentText(e.target.value)}
+            style={{
+              backgroundColor: theme === "light" ? "#f8f9fa" : "#555",
+              color: theme === "light" ? "#000" : "#fff",
+            }}
+          />
+          <Form.Select
+            value={newRating}
+            onChange={(e) => setNewRating(Number(e.target.value))}
+            style={{
+              backgroundColor: theme === "light" ? "#f8f9fa" : "#555",
+              color: theme === "light" ? "#000" : "#fff",
+            }}
+          >
             {[1, 2, 3, 4, 5].map((num) => (
               <option key={num} value={num}>{num} ⭐</option>
             ))}
-          </select>
-          <button onClick={handleEdit}>Salva</button>
-          <button onClick={() => setIsEditing(false)}>Annulla</button>
+          </Form.Select>
+          <Button variant="success" onClick={handleEdit} className="mt-2">Salva</Button>
+          <Button variant="secondary" onClick={() => setIsEditing(false)} className="mt-2">Annulla</Button>
         </>
       ) : (
         <>
           <strong>{comment.author}:</strong> {comment.comment} ⭐ {comment.rate}/5
-          <button onClick={() => setIsEditing(true)}>Modifica</button>
-          <button onClick={handleDelete}>Elimina</button>
+          <div>
+            <Button variant="warning" size="sm" onClick={() => setIsEditing(true)}>Modifica</Button>
+            <Button variant="danger" size="sm" onClick={handleDelete}>Elimina</Button>
+          </div>
         </>
       )}
     </li>

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import CommentArea from "./CommentArea";
+import { useTheme } from "./ThemeContext";
 
 function SingleBook(props) {
   const [selected, setSelected] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const { theme } = useTheme();
 
   const toggleSelection = () => {
     setSelected(prevSelected => !prevSelected);
@@ -17,7 +19,9 @@ function SingleBook(props) {
           width: "18rem",
           margin: "10px",
           border: selected ? "3px solid red" : "none",
-          cursor: "pointer"
+          cursor: "pointer",
+          backgroundColor: theme === "light" ? "#fff" : "#333",
+          color: theme === "light" ? "#000" : "#fff",
         }}
       >
         <Card.Img
@@ -34,11 +38,17 @@ function SingleBook(props) {
 
       <div
         onClick={() => setShowComments(!showComments)} 
-        style={{ border: "1px solid black", padding: "10px", cursor: "pointer" }}
+        style={{
+          border: "1px solid black",
+          padding: "10px",
+          cursor: "pointer",
+          backgroundColor: theme === "light" ? "#eee" : "#555",
+          color: theme === "light" ? "#000" : "#fff",
+        }}
       >
-        <h2>Libro XYZ</h2>
+        <h2>{props.book.title}</h2>
         <p>Cliccami per vedere i commenti</p>
-        {showComments && <CommentArea />}
+        {showComments && <CommentArea bookId={props.book.id} />}
       </div>
     </>
   );

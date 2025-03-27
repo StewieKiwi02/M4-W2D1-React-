@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import CommentList from "./CommentList";
 import AddComment from "./AddComment";
 import { Spinner, Alert } from "react-bootstrap"; 
+import { useTheme } from "./ThemeContext";
 
 const CommentArea = ({ bookId }) => {
+  const {theme} = useTheme();
+
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -34,13 +37,20 @@ const CommentArea = ({ bookId }) => {
   }, [bookId]);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: theme === "light" ? "#f9f9f9" : "#222",
+        color: theme === "light" ? "#000" : "#fff",
+        padding: "1rem",
+        borderRadius: "8px"
+      }}
+    >
       <h3>Commenti</h3>
 
 
-      {loading && <Spinner animation="border" variant="primary" />}
+      {loading && <Spinner animation="border" variant={theme === "light" ? "primary" : "light"} />}
 
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error && <Alert variant={theme === "light" ? "danger" : "dark"}>{error}</Alert>}
 
       {!loading && !error && (
         <>
