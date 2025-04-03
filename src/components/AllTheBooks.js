@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import SingleBook from "./SingleBook";
-import { useTheme } from "./ThemeContext"; // Importiamo il tema
+import { useTheme } from "./ThemeContext";
 
 function AllTheBooks({ searchTerm, booksData }) {
-  const { theme } = useTheme(); // Otteniamo il tema
+  const { theme } = useTheme();
   const [books, setBooks] = useState([]);
 
+  // Questo useEffect si esegue solo quando booksData cambia
   useEffect(() => {
-    setBooks(booksData);
-  }, [booksData]);
+    if (booksData) {
+      setBooks(booksData); // Aggiorna lo stato solo se booksData cambia
+    }
+  }, [booksData]); // Dipendenza corretta: booksData
 
   const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -21,7 +24,7 @@ function AllTheBooks({ searchTerm, booksData }) {
 
       <Row>
         {filteredBooks.map((book) => (
-          <Col md={4} key={book.id} className="mb-4">
+          <Col md={4} key={book.ASIN} className="mb-4">
             <SingleBook book={book} />
           </Col>
         ))}

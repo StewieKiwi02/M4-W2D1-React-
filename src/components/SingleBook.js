@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import CommentArea from "./CommentArea";
 import { useTheme } from "./ThemeContext";
+import { useNavigate } from "react-router-dom";
 
 function SingleBook(props) {
   const [selected, setSelected] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   const toggleSelection = () => {
     setSelected(prevSelected => !prevSelected);
@@ -33,6 +35,13 @@ function SingleBook(props) {
         />
         <Card.Body>
           <Card.Title>{props.book.title}</Card.Title>
+          <button 
+            variant="primary"
+            onClick={() => navigate(`/BookDetails/${props.book.ASIN}`)}
+            style={{ width: "100%", marginTop: "10px" }}
+          >
+            Vedi dettagli
+          </button>
         </Card.Body>
       </Card>
 

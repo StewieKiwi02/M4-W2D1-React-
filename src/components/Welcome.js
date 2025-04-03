@@ -32,6 +32,7 @@ function MyAlert({ title = "Ciao!", message = "Questo è un avviso importante!",
           Mostra Avviso
         </Button>
       )}
+      
     </Container>
   );
 }

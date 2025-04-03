@@ -1,17 +1,23 @@
 [
     {
-      "id": 1,
+      "ASIN": 1,
       "title": "Book One",
+      "author": "EVV",
+      "price": "12",
       "cover": "https://cdn.theatlantic.com/thumbor/iKZIiXw9DhSCHxCEAee5ZbOI6wA=/0x0:2000x1125/960x540/media/img/mt/2023/07/books_picku_up_put_down_final/original.jpg"
     },
     {
-      "id": 2,
+      "ASIN": 2,
       "title": "Book Two",
+      "author": "CDE",
+      "price": "8",
       "cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRQDhD5ObA-5LZPFHw1aTWxZQId7swnaYSnPzCzRx7h2leF4v8rNQDJ6XsmeHWOBOz254&usqp=CAU"
     },
     {
-      "id": 3,
+      "ASIN": 3,
       "title": "Book Three",
+      "author": "MOON",
+      "price": "30",
       "cover": "https://www.worldbookday.com/wp-content/uploads/2023/11/BookStacks_large_1-e1700482264728.png"
     }
   ]
